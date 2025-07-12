@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب المنتج</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #e6f0f9;
+            margin: 0;
+            padding: 20px;
+            color: #2c3e50;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #dee2e6;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .options-group {
+            margin-top: 15px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        
+        .delivery-options, 
+        .shipping-company {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .delivery-option, 
+        .company-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+        }
+        
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #218838;
+        }
+        
+        .confirmation-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        #municipality {
+            display: block;
+        }
+        
+        #municipality[disabled] {
+            opacity: 0.7;
+            background-color: #f5f5f5;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .delivery-options, 
+            .shipping-company {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>طلب المنتج</h1>
+        
+        <form id="clientForm">
+            <div class="form-group">
+                <label for="firstName">الاسم:</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="lastName">اللقب:</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">رقم الهاتف:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="state">الولاية:</label>
+                <select id="state" name="state" required>
+                    <option value="">اختر ولاية...</option>
+                    <option value="أدرار">أدرار</option>
+                    <option value="الشلف">الشلف</option>
+                    <option value="الأغواط">الأغواط</option>
+                    <option value="أم البواقي">أم البواقي</option>
+                    <option value="باتنة">باتنة</option>
+                    <option value="بجاية">بجاية</option>
+                    <option value="بسكرة">بسكرة</option>
+                    <option value="بشار">بشار</option>
+                    <option value="البليدة">البليدة</option>
+                    <option value="البويرة">البويرة</option>
+                    <option value="تمنراست">تمنراست</option>
+                    <option value="تبسة">تبسة</option>
+                    <option value="تلمسان">تلمسان</option>
+                    <option value="تيارت">تيارت</option>
+                    <option value="تيزي وزو">تيزي وزو</option>
+                    <option value="الجزائر">الجزائر</option>
+                    <option value="الجلفة">الجلفة</option>
+                    <option value="جيجل">جيجل</option>
+                    <option value="سطيف">سطيف</option>
+                    <option value="سعيدة">سعيدة</option>
+                    <option value="سكيكدة">سكيكدة</option>
+                    <option value="سيدي بلعباس">سيدي بلعباس</option>
+                    <option value="عنابة">عنابة</option>
+                    <option value="قالمة">قالمة</option>
+                    <option value="قسنطينة">قسنطينة</option>
+                    <option value="المدية">المدية</option>
+                    <option value="مستغانم">مستغانم</option>
+                    <option value="المسيلة">المسيلة</option>
+                    <option value="معسكر">معسكر</option>
+                    <option value="ورقلة">ورقلة</option>
+                    <option value="وهران">وهران</option>
+                    <option value="البيض">البيض</option>
+                    <option value="إليزي">إليزي</option>
+                    <option value="برج بوعريريج">برج بوعريريج</option>
+                    <option value="بومرداس">بومرداس</option>
+                    <option value="الطارف">الطارف</option>
+                    <option value="تندوف">تندوف</option>
+                    <option value="تيسمسيلت">تيسمسيلت</option>
+                    <option value="الوادي">الوادي</option>
+                    <option value="خنشلة">خنشلة</option>
+                    <option value="سوق أهراس">سوق أهراس</option>
+                    <option value="تيبازة">تيبازة</option>
+                    <option value="ميلة">ميلة</option>
+                    <option value="عين الدفلى">عين الدفلى</option>
+                    <option value="النعامة">النعامة</option>
+                    <option value="عين تيموشنت">عين تيموشنت</option>
+                    <option value="غرداية">غرداية</option>
+                    <option value="غليزان">غليزان</option>
+                    <option value="تيميمون">تيميمون</option>
+                    <option value="برج الحواس">برج الحواس</option>
+                    <option value="المنيعة">المنيعة</option>
+                    <option value="أولاد جلال">أولاد جلال</option>
+                    <option value="بنى عباس">بنى عباس</option>
+                    <option value="المنصورة">المنصورة</option>
+                    <option value="المغير">المغير</option>
+                    <option value="طولقة">طولقة</option>
+                    <option value="بني ونيف">بني ونيف</option>
+                    <option value="حاسي مسعود">حاسي مسعود</option>
+                    <option value="بركان">بركان</option>
+                    <option value="جانت">جانت</option>
+                    <option value="عين قزام">عين قزام</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="municipality">البلدية:</label>
+                <select id="municipality" name="municipality" required disabled>
+                    <option value="">اختر الولاية أولاً</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="address">العنوان الكامل:</label>
+                <textarea id="address" name="address" rows="3" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="productSpecs">مواصفات المنتج:</label>
+                <textarea id="productSpecs" name="productSpecs" rows="5" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>شركة التوصيل:</label>
+                <div class="options-group">
+                    <div class="shipping-company">
+                        <div class="company-option">
+                            <input type="radio" id="yalidine" name="shippingCompany" value="yalidine" checked>
+                            <label for="yalidine">yalidine</label>
+                        </div>
+                        <div class="company-option">
+                            <input type="radio" id="zrExpress" name="shippingCompany" value="zr express">
+                            <label for="zrExpress">zr express</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>خيارات التوصيل:</label>
+                <div class="options-group">
+                    <div class="delivery-options">
+                        <div class="delivery-option">
+                            <input type="radio" id="officeDelivery" name="delivery" value="للمكتب (400 دج)" checked>
+                            <label for="officeDelivery">للمكتب (400 دج)</label>
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" id="homeDelivery" name="delivery" value="للمنزل (700 دج)">
+                            <label for="homeDelivery">للمنزل (700 دج)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" id="submitBtn">إرسال الطلب</button>
+        </form>
+        
+        <div id="confirmationMessage" class="confirmation-message">
+            تم الطلب بنجاح سيتم تأكيد طلبك و التواصل معك في أقرب وقت، شكرا
+        </div>
+    </div>
+    
+    <script>
+        // بيانات البلديات لكل ولاية (58 ولاية)
+        const municipalitiesData = {
+            "أدرار": ["أدرار", "تيميمون", "زاوية كنتة", "رقان", "تسابيت", "أولف", "تيت", "فنوغيل", "أوقروت", "أولاد السعيد", "بني عباس"],
+            "الشلف": ["الشلف", "وادي الفضة", "بني حواء", "الكريمية", "الزبوجة", "أولاد فارس", "المرسى", "تنس", "سيدي عكاشة", "بوقادير", "تاجنة"],
+            "الأغواط": ["الأغواط", "قصر الحيران", "حاسي الرمل", "سيدي مخلوف", "تاويالة", "الحويطة", "عين ماضي", "تاجرونة", "الغيشة", "أفلو", "سبقاق"],
+            "أم البواقي": ["أم البواقي", "عين البيضاء", "سوق نعمان", "عين مليلة", "فكيرينة", "مسكيانة", "عين ببوش", "العامرية", "بئر الشهداء", "سوق خناقة", "الضلعة"],
+            "باتنة": ["باتنة", "مروانة", "نقاوس", "رأس العيون", "تيمقاد", "إشمول", "أريس", "تازولت", "ثنية العابد", "عين التوتة", "بريكة"],
+            "بجاية": ["بجاية", "أقبو", "تازمالت", "خراطة", "سيدي عيش", "أوزلاقن", "توجة", "صدوق", "سوق الإثنين", "تيشي", "برباشة"],
+            "بسكرة": ["بسكرة", "أورلال", "زريبة الوادي", "ليشانة", "مشونش", "سيدي عقبة", "طولقة", "أوماش", "برانيس", "الشمرة", "الوطاية"],
+            "بشار": ["بشار", "بني ونيف", "تاغيت", "كرزاز", "لحمر", "القنادسة", "موغل", "تيمودي", "بوكايس", "مشرية", "تبلبالة"],
+            "البليدة": ["البليدة", "بوفاريك", "الأربعاء", "مفتاح", "بوعينان", "حمام ملوان", "وادي العلايق", "بوقرة", "جبابرة", "الشبلي", "الصومعة"],
+            "البويرة": ["البويرة", "الأخضرية", "الهاشمية", "سور الغزلان", "بشلول", "الأصنام", "معالة", "قادرية", "روراوة", "سوق الخميس", "بئر غبالو"],
+            "تمنراست": ["تمنراست", "عين قزام", "عين أمقل", "إدلس", "تاظروك", "تين زواتين", "عين صالح", "عين غار", "تيمياوين", "أبلسة", "بغاي"],
+            "تبسة": ["تبسة", "بئر العاتر", "الشريعة", "العوينات", "بئر مقدم", "الخنقة", "قلال", "مرسط", "نقرين", "العقلة", "الماء الأبيض"],
+            "تلمسان": ["تلمسان", "غريس", "بنى سنوس", "باب العسة", "صبرة", "الرمشي", "سيدي الجيلالي", "بني بوسعيد", "الفحول", "عين تالوت", "سبدو"],
+            "تيارت": ["تيارت", "قصر الشلالة", "مدروسة", "عين الذهب", "سيدي بختي", "مغيلة", "سيدي عبد الرحمن", "توسنينة", "فرندة", "عين كرمس", "السبت"],
+            "تيزي وزو": ["تيزي وزو", "عين الحمام", "أزفون", "بني دوالة", "بني يني", "ذراع الميزان", "معاتقة", "واقنون", "يطافن", "مقلع", "تيزي راشد"],
+            "الجزائر": ["الجزائر الوسطى", "القصبة", "باب الوادي", "بلوزداد", "بولوغين", "الحامة", "بئر مراد رايس", "بئر خادم", "الحراش", "الدار البيضاء", "بوروبة"],
+            "الجلفة": ["الجلفة", "حاسي بحبح", "عين وسارة", "دار الشيوخ", "الشارف", "حد الصحاري", "مسعد", "زعفران", "عين الإبل", "القديد", "سيدي لعجال"],
+            "جيجل": ["جيجل", "الميلية", "الطاهير", "الشقفة", "سيدي معروف", "البارايل", "تاوجرة", "العنصر", "الشحنة", "بودريعة", "جميلة"],
+            "سطيف": ["سطيف", "عين أرنات", "بئر العرش", "بني عزيز", "بني ورتيلان", "جميلة", "قنزات", "صالح باي", "العلمة", "حمام قرقور", "حمام السخنة"],
+            "سعيدة": ["سعيدة", "يوب", "سيدي عمر", "حاسي زهانة", "أولاد براهم", "المعمورة", "عين السلطان", "سيدي بوبكر", "الحساسنة", "عقلة الاغواطي", "البيض"],
+            "سكيكدة": ["سكيكدة", "الحدائق", "أم الطوب", "بن عزوز", "الرميلة", "الزيتونة", "فلفلة", "عين قشرة", "الحروش", "القل", "مجاز الدشيش"],
+            "سيدي بلعباس": ["سيدي بلعباس", "تسالة", "عين البرد", "مولاي سليسن", "سيدي علي بوسيدي", "تغاليمت", "مرحوم", "رأس الماء", "سفيزف", "تلاغ", "عين تندمين"],
+            "عنابة": ["عنابة", "برحال", "الحجار", "العلمة", "البوني", "الشرفة", "وادي العنب", "سرايدي", "شطايبي", "عين الباردة", "البراية"],
+            "قالمة": ["قالمة", "حمام النبايل", "وادي الزناتي", "قلعة بوصبع", "عين مخلوف", "بوشقوف", "هيليوبوليس", "مجاز الصفاء", "رأس العقبة", "عين بن بيضاء", "خيري"],
+            "قسنطينة": ["قسنطينة", "الخروب", "عين عبيد", "زيغود يوسف", "حامة بوزيان", "ابن زياد", "المرسى", "أولاد رحمون", "بني حميدان", "ديدوش مراد", "عين السمارة"],
+            "المدية": ["المدية", "برج الأمير خالد", "العزيزية", "الشهبونية", "العفرون", "أولاد عنتر", "السواقي", "تابنة", "بني سليمان", "العيساوية", "وزرة"],
+            "مستغانم": ["مستغانم", "حاسي مماش", "عين تادلس", "بوقيراط", "سيدي علي", "خير الدين", "صيادة", "عشعاشة", "مزغران", "سيدي لخضر", "منصورة"],
+            "المسيلة": ["المسيلة", "بوسعادة", "أولاد دراج", "بن سرور", "المعاضيد", "الهامل", "خبانة", "أولاد ماضي", "سيدي عامر", "مقرة", "البرج"],
+            "معسكر": ["معسكر", "سيق", "غريس", "وادي الأبطال", "عين فكان", "ماوسة", "تيزي", "البرج", "القرط", "المحمدية", "الخضارة"],
+            "ورقلة": ["ورقلة", "عين البيضاء", "تقورت", "حاسي مسعود", "البرمة", "النزلة", "الرويسات", "الحجيرة", "تماسين", "سيدي خويلد", "بلدة"],
+            "وهران": ["وهران", "عين الترك", "أرزيو", "بطيوة", "السانية", "بئر الجير", "حاسي بونيف", "بوفاتيس", "وادي تليلات", "قديل", "عين البية"],
+            "البيض": ["البيض", "بوقطب", "البنود", "الغاسول", "بريزينة", "الخيثر", "كراكدة", "أربوات", "بوشقرون", "الرجم", "سيدي سليمان"],
+            "إليزي": ["إليزي", "جانت", "برج الحواس", "أماسين", "إن أميناس", "عين أمناس", "تيمياوين", "عين قزام", "تاظروك", "عين صالح", "بغاي"],
+            "برج بوعريريج": ["برج بوعريريج", "رأس الوادي", "برج الغدير", "المنصورة", "مجانة", "بئر قاصد علي", "الحمادية", "بليمور", "الرابطة", "عين تاغروت", "تسامرت"],
+            "بومرداس": ["بومرداس", "بغلية", "بودواو", "الناصرية", "ثنية بني عائشة", "خميس الخشنة", "دلس", "الأخضرية", "سيدي داود", "زموري", "بني عمران"],
+            "الطارف": ["الطارف", "بن مهيدي", "بوحجار", "القالة", "العيون", "الشط", "البسباس", "بحيرة الطيور", "بوقوس", "الذرعان", "الشحنة"],
+            "تندوف": ["تندوف", "أولاد خضير", "المريجة", "أم العسل", "عين الصفاء", "بوكراع", "الزوية", "عين بن خليل", "بني ونيف", "عين صالح", "بغاي"],
+            "تيسمسيلت": ["تيسمسيلت", "ثنية الأحد", "الأزهرية", "برج الأمير عبد القادر", "خميستي", "العيون", "سيدي عابد", "لرجام", "ملوزة", "سيدي بوتشنت", "بني شعيب"],
+            "الوادي": ["الوادي", "البياضة", "حاسي خليفة", "المقرن", "الرباح", "الطالب العربي", "اميه وانسة", "الداموس", "سيدي عمران", "قمار", "المغير"],
+            "خنشلة": ["خنشلة", "قايس", "بوشقرون", "ششار", "بابار", "الحامة", "أولاد رشاش", "يابوس", "بغاي", "تاكسلانت", "العلمة"],
+            "سوق أهراس": ["سوق أهراس", "سدراتة", "أم العظائم", "الحدادة", "المراهنة", "تاورة", "العوينات", "بئر بوحوش", "مداوروش", "أولاد إدريس", "البلالة"],
+            "تيبازة": ["تيبازة", "شرشال", "دواودة", "فوكة", "بوهارون", "القليعة", "حجوط", "سيدي غيلاس", "الناظور", "عين تاقورايت", "خميستي"],
+            "ميلة": ["ميلة", "فرجيوة", "شلغوم العيد", "تاجنانت", "ترعي باينان", "سيدي مروان", "عين البيضاء أحريش", "أولاد اخلوف", "التلاغمة", "الرواشد", "زراعة زواغي"],
+            "عين الدفلى": ["عين الدفلى", "مليانة", "بومدفع", "خميس مليانة", "العامرية", "العبادية", "بئر ولد خريص", "بوراشد", "جندل", "الطاهير", "الماين"],
+            "النعامة": ["النعامة", "مشرية", "عين الصفراء", "تيميمون", "المغير", "سفيسيفة", "عين بن خليل", "عسلة", "مغرار", "القصدير", "بشار"],
+            "عين تيموشنت": ["عين تيموشنت", "بني صاف", "الحناية", "وادي برقش", "عين الكيحل", "الأزهرية", "الملعب", "عين الأربعاء", "السانية", "أولاد الكيحل", "سيدي بن عدة"],
+            "غرداية": ["غرداية", "متليلي", "المنيعة", "بونورة", "القرارة", "زلفانة", "بريان", "حاسي لفحل", "العطف", "بونوار", "ضاية بن ضحوة"],
+            "غليزان": ["غليزان", "وادي رهيو", "المطمر", "يلل", "عمي موسى", "الرمكة", "منداس", "سيدي سعادة", "حمري", "عين طارق", "الولجة"],
+            "تيميمون": ["تيميمون", "أولاد السعيد", "زاوية كنتة", "رقان", "تسابيت", "أولف", "تيت", "فنوغيل", "أوقروت", "بني عباس", "أدرار"],
+            "برج الحواس": ["برج الحواس", "أماسين", "إن أميناس", "عين أمناس", "تيمياوين", "عين قزام", "تاظروك", "عين صالح", "بغاي", "إليزي", "جانت"],
+            "المنيعة": ["المنيعة", "متليلي", "بونورة", "القرارة", "زلفانة", "بريان", "حاسي لفحل", "العطف", "بونوار", "ضاية بن ضحوة", "غرداية"],
+            "أولاد جلال": ["أولاد جلال", "عين البيضاء", "سوق نعمان", "عين مليلة", "فكيرينة", "مسكيانة", "عين ببوش", "العامرية", "بئر الشهداء", "سوق خناقة", "الضلعة"],
+            "بنى عباس": ["بنى عباس", "تيميمون", "أولاد السعيد", "زاوية كنتة", "رقان", "تسابيت", "أولف", "تيت", "فنوغيل", "أوقروت", "أدرار"],
+            "المنصورة": ["المنصورة", "رأس الوادي", "برج الغدير", "مجانة", "بئر قاصد علي", "الحمادية", "بليمور", "الرابطة", "عين تاغروت", "تسامرت", "برج بوعريريج"],
+            "المغير": ["المغير", "البياضة", "حاسي خليفة", "المقرن", "الرباح", "الطالب العربي", "اميه وانسة", "الداموس", "سيدي عمران", "قمار", "الوادي"],
+            "طولقة": ["طولقة", "بسكرة", "أورلال", "زريبة الوادي", "ليشانة", "مشونش", "سيدي عقبة", "أوماش", "برانيس", "الشمرة", "الوطاية"],
+            "بني ونيف": ["بني ونيف", "بشار", "تاغيت", "كرزاز", "لحمر", "القنادسة", "موغل", "تيمودي", "بوكايس", "مشرية", "تبلبالة"],
+            "حاسي مسعود": ["حاسي مسعود", "ورقلة", "عين البيضاء", "تقورت", "البرمة", "النزلة", "الرويسات", "الحجيرة", "تماسين", "سيدي خويلد", "بلدة"],
+            "بركان": ["بركان", "أولاد خضير", "المريجة", "أم العسل", "عين الصفاء", "بوكراع", "الزوية", "عين بن خليل", "بني ونيف", "عين صالح", "بغاي"],
+            "جانت": ["جانت", "إليزي", "برج الحواس", "أماسين", "إن أميناس", "عين أمناس", "تيمياوين", "عين قزام", "تاظروك", "عين صالح", "بغاي"],
+            "عين قزام": ["عين قزام", "تمنراست", "عين أمقل", "إدلس", "تاظروك", "تين زواتين", "عين صالح", "عين غار", "تيمياوين", "أبلسة", "بغاي"]
+        };
+
+        // عند تغيير الولاية
+        document.getElementById('state').addEventListener('change', function() {
+            const state = this.value;
+            const municipalitySelect = document.getElementById('municipality');
+            
+            // تفريغ القائمة الحالية
+            municipalitySelect.innerHTML = '';
+            
+            if (state && municipalitiesData[state]) {
+                municipalitySelect.disabled = false;
+                
+                // إضافة خيار افتراضي
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'اختر البلدية...';
+                municipalitySelect.appendChild(defaultOption);
+                
+                // إضافة البلديات الخاصة بالولاية المختارة
+                municipalitiesData[state].forEach(municipality => {
+                    const option = document.createElement('option');
+                    option.value = municipality;
+                    option.textContent = municipality;
+                    municipalitySelect.appendChild(option);
+                });
+            } else {
+                municipalitySelect.disabled = true;
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'اختر الولاية أولاً';
+                municipalitySelect.appendChild(defaultOption);
+            }
+        });
+
+        // إرسال النموذج
+        document.getElementById('clientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'جاري الإرسال...';
+
+            // جمع البيانات من النموذج
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                phone: document.getElementById('phone').value,
+                state: document.getElementById('state').value,
+                municipality: document.getElementById('municipality').value,
+                address: document.getElementById('address').value,
+                productSpecs: document.getElementById('productSpecs').value,
+                shippingCompany: document.querySelector('input[name="shippingCompany"]:checked').value,
+                delivery: document.querySelector('input[name="delivery"]:checked').value
+            };
+
+            // إعداد رسالة لتكون مرسلة إلى بوت تلغرام
+            const message = `
+طلب منتج جديد:
+الاسم: ${formData.firstName} ${formData.lastName}
+الهاتف: ${formData.phone}
+الولاية: ${formData.state}
+البلدية: ${formData.municipality}
+العنوان: ${formData.address}
+مواصفات المنتج: ${formData.productSpecs}
+شركة التوصيل: ${formData.shippingCompany}
+خيارات التوصيل: ${formData.delivery}
+            `;
+
+            // إرسال البيانات إلى بوت تلغرام
+            const token = '7851144038:AAFgL0uatEhp2-6Xn7UVOIEMDE804tcPAIY';
+            const chatId = '1860120911'; // استبدل بمعرف الدردشة الخاص بك
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('confirmationMessage').style.display = 'block';
+                    document.getElementById('clientForm').style.display = 'none';
+                } else {
+                    throw new Error('فشل إرسال الطلب');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('حدث خطأ أثناء إرسال الطلب: ' + error.message);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'إرسال الطلب';
+            });
+        });
+    </script>
+</body>
+</html>
